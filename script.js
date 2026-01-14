@@ -71,6 +71,42 @@ function adjustTimer(amount) {
     updateTimerDisplay();
 }
 
+function showTimerInput() {
+    const displayContainer = document.getElementById('timerDisplayContainer');
+    const inputContainer = document.getElementById('timerInputContainer');
+    const manualInput = document.getElementById('timeTimerManual');
+    const currentValue = document.getElementById('timeTimer').value;
+    
+    // Container umschalten
+    displayContainer.style.display = 'none';
+    inputContainer.style.display = 'block';
+    
+    // Aktuellen Wert setzen und fokussieren
+    manualInput.value = currentValue;
+    setTimeout(() => {
+        manualInput.focus();
+        manualInput.select();
+    }, 50);
+}
+
+function hideTimerInput() {
+    const displayContainer = document.getElementById('timerDisplayContainer');
+    const inputContainer = document.getElementById('timerInputContainer');
+    const manualInput = document.getElementById('timeTimerManual');
+    const timerInput = document.getElementById('timeTimer');
+    
+    // Wert übernehmen
+    const newValue = Math.max(0, parseInt(manualInput.value) || 0);
+    timerInput.value = newValue;
+    
+    // Container umschalten
+    inputContainer.style.display = 'none';
+    displayContainer.style.display = 'block';
+    
+    // Display aktualisieren
+    updateTimerDisplay();
+}
+
 function resetTimer() {
     console.log('resetTimer called');
     const timerInput = document.getElementById('timeTimer');

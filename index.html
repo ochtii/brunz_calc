@@ -56,8 +56,20 @@
         <label for="timeTimer">Vor wie vielen Minuten?</label>
         <div style="display: flex; gap: 10px; align-items: center; margin-top: 12px;">
             <div style="flex: 1; text-align: center;">
-                <div style="font-size: 2.5em; font-weight: bold; color: var(--accent); margin-bottom: 8px; font-family: 'Courier New', monospace;">
-                    <span id="timerDisplay">0</span> <span style="font-size: 0.5em; color: #888;">Min</span>
+                <div id="timerDisplayContainer" onclick="showTimerInput()" style="cursor: pointer; user-select: none;" title="Klicken zum manuellen Eingeben">
+                    <div style="font-size: 2.5em; font-weight: bold; color: var(--accent); margin-bottom: 8px; font-family: 'Courier New', monospace;">
+                        <span id="timerDisplay">0</span> <span style="font-size: 0.5em; color: #888;">Min</span>
+                    </div>
+                    <div style="font-size: 0.75em; color: #666; margin-top: -5px;">✏️ Klicken zum Bearbeiten</div>
+                </div>
+                <div id="timerInputContainer" style="display: none;">
+                    <input type="number" id="timeTimerManual" min="0" step="1" 
+                           style="width: 150px; padding: 15px; font-size: 2em; text-align: center; font-weight: bold; 
+                                  background: #2a2a2a; border: 3px solid var(--accent); border-radius: 10px; 
+                                  color: var(--accent); font-family: 'Courier New', monospace;"
+                           onblur="hideTimerInput()" 
+                           onkeypress="if(event.key==='Enter') this.blur();">
+                    <div style="font-size: 0.8em; color: #888; margin-top: 5px;">Enter oder Klick außerhalb zum Bestätigen</div>
                 </div>
                 <input type="number" id="timeTimer" value="0" min="0" step="1" style="display: none;">
             </div>
