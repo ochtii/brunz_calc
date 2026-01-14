@@ -127,9 +127,60 @@
     <div class="footer">
         &copy; 2025 Stefan & Vicky<br>
         Nutzung auf eigene Gefahr. Hosenwechsel nicht inkludiert.<br>
+        <button onclick="showDisclaimer()" style="margin-top: 8px; padding: 4px 8px; background: none; border: none; color: #888; text-decoration: underline; cursor: pointer; font-size: 0.85em; transition: color 0.2s;" onmouseover="this.style.color='var(--accent)';" onmouseout="this.style.color='#888';">
+            ⚠️ Disclaimer & Haftungsausschluss
+        </button>
+        <br>
         <button id="console-toggle" onclick="toggleDebugConsole()" style="margin-top: 8px; padding: 6px 12px; background: #2a2a2a; color: #888; border: 2px solid #444; border-radius: 6px; cursor: pointer; font-size: 0.85em; transition: all 0.2s;" onmouseover="this.style.background='#333'; this.style.borderColor='var(--accent)'; this.style.color='var(--accent)';" onmouseout="this.style.background='#2a2a2a'; this.style.borderColor='#444'; this.style.color='#888';">
             🛠️ Debug-Konsole
         </button>
+    </div>
+</div>
+
+<!-- Disclaimer Modal -->
+<div id="disclaimer-modal" class="modal" style="display: none;" onclick="if(event.target === this) hideDisclaimer();">
+    <div class="modal-content" style="max-width: 700px;">
+        <div class="modal-header">
+            <h2>⚠️ Disclaimer & Haftungsausschluss</h2>
+            <button onclick="hideDisclaimer()" style="background: none; border: none; color: #e0e0e0; font-size: 2em; cursor: pointer; line-height: 1;">&times;</button>
+        </div>
+        <div class="modal-body" style="text-align: left; line-height: 1.6;">
+            <div style="background: rgba(255,107,107,0.1); border-left: 4px solid #ff6b6b; padding: 15px; margin-bottom: 20px; border-radius: 4px;">
+                <strong style="color: #ff6b6b; font-size: 1.1em;">🚨 WICHTIG: SATIRE & UNTERHALTUNG</strong>
+                <p style="margin-top: 8px; color: #ddd;">Dieser Rechner ist ein <strong>humorvolles Tool</strong> und dient ausschließlich der <strong>Unterhaltung</strong>. Jegliche Berechnungen sind <strong>nicht medizinisch fundiert</strong> und stellen <strong>keine Gesundheitsberatung</strong> dar.</p>
+            </div>
+
+            <h3 style="color: var(--accent); margin-top: 20px;">Für alle Dummen und Beschränkten:</h3>
+            <ul style="color: #ccc; padding-left: 20px;">
+                <li style="margin-bottom: 10px;"><strong>Keine medizinische Beratung:</strong> Die Berechnungen basieren auf lustigen Annahmen, nicht auf wissenschaftlichen Fakten. Verlass dich NICHT darauf für echte Gesundheitsentscheidungen.</li>
+                <li style="margin-bottom: 10px;"><strong>Alkoholkonsum ist gefährlich:</strong> Übermäßiger Alkoholkonsum kann zu schweren gesundheitlichen Schäden führen. Trink verantwortungsvoll oder gar nicht.</li>
+                <li style="margin-bottom: 10px;"><strong>Keine Haftung:</strong> Wir übernehmen KEINE Haftung für nasse Hosen, geplatzte Blasen, verkaterte Morgende, oder sonstige Folgen deiner Trinkgelage.</li>
+                <li style="margin-bottom: 10px;"><strong>Kein Freibrief zum Saufen:</strong> Nur weil der Rechner sagt "noch 5 Hülsen passen rein", heißt das NICHT, dass du die auch trinken sollst!</li>
+                <li style="margin-bottom: 10px;"><strong>Nicht für Minderjährige:</strong> Alkoholkonsum ist in Österreich erst ab 16 Jahren (Bier/Wein) bzw. 18 Jahren (Spirituosen) erlaubt.</li>
+            </ul>
+
+            <h3 style="color: var(--accent); margin-top: 25px;">Haftungsausschluss:</h3>
+            <p style="color: #ccc;">Die Entwickler (Stefan & Vicky) haften nicht für:</p>
+            <ul style="color: #ccc; padding-left: 20px;">
+                <li>Persönliche Blamagen auf Partys</li>
+                <li>Finanzielle Schäden durch übermäßigen Bierkonsum</li>
+                <li>Sozialen Rückzug nach peinlichen Aktionen</li>
+                <li>Gesundheitliche Folgen jeglicher Art</li>
+                <li>Beziehungskrisen aufgrund von "nur noch eine Hülse"</li>
+                <li>Verlorene Schlüssel, Handys oder Würde</li>
+            </ul>
+
+            <div style="background: rgba(255,183,3,0.1); border-left: 4px solid var(--accent); padding: 15px; margin-top: 25px; border-radius: 4px;">
+                <p style="margin: 0; color: var(--accent); font-weight: bold;">🍺 Fazit: Sei kein Trottel!</p>
+                <p style="margin-top: 8px; color: #ddd;">Genieß dein Bier, aber übertreib's nicht. Hör auf deinen Körper, nicht auf einen Schmarn-Rechner im Internet. Und wenn du trotzdem zu viel gesoffen hast: Selber schuld, Oida!</p>
+            </div>
+
+            <div style="text-align: center; margin-top: 25px;">
+                <button onclick="hideDisclaimer()" style="padding: 12px 30px; background: var(--accent); color: #000; border: none; border-radius: 8px; font-size: 1em; font-weight: bold; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#ffca3a';" onmouseout="this.style.background='var(--accent)';">
+                    Verstanden, ich bin nicht blöd!
+                </button>
+            </div>
+        </div>
     </div>
 </div>
 

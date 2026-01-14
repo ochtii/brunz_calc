@@ -595,3 +595,14 @@ window.taciticalVomit = function() {
 // Loop
 setInterval(calculatePee, 5000); // Check alle 5 sek
 calculatePee(); // Init
+
+// Disclaimer Funktionen
+function showDisclaimer() {
+    const modal = document.getElementById('disclaimer-modal');
+    modal.style.display = 'flex';
+}
+
+function hideDisclaimer() {
+    const modal = document.getElementById('disclaimer-modal');
+    modal.style.display = 'none';
+}
