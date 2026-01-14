@@ -176,9 +176,11 @@ function closeCacheStats() {
 }
 
 // Modal bei Click außerhalb schließen
-document.addEventListener('click', (e) => {
-    const modal = document.getElementById('cache-modal');
-    if (e.target === modal) {
-        modal.style.display = 'none';
-    }
+document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('click', (e) => {
+        const modal = document.getElementById('cache-modal');
+        if (e.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
 });

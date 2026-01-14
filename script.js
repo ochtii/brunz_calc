@@ -1,6 +1,7 @@
 // State
 let drinks = [];
 const updateInterval = 10000; // Alle 10 sekunden update
+let currentTimeMode = 'clock'; // 'clock' oder 'timer'
 
 // Realistisches Volumen pro Getränktyp
 const drinkVolumes = {
@@ -10,35 +11,97 @@ const drinkVolumes = {
     "1.6": 80     // Schnaps / Harter Alk
 };
 
+// Slider-Bereiche pro Getränktyp (min, max, default)
+const sliderRanges = {
+    "1.0": { min: 100, max: 1000, default: 350 },   // Wasser / Kracherl
+    "1.4": { min: 200, max: 1000, default: 500 },   // Bier / Seidl / Hülse
+    "1.2": { min: 100, max: 500, default: 300 },    // Kaffee / Energy
+    "1.6": { min: 20, max: 200, default: 80 }       // Schnaps / Harter Alk
+};
+
 function updateAmountDefault() {
     const drinkType = document.getElementById('drinkType').value;
     const amountInput = document.getElementById('amount');
-    amountInput.value = drinkVolumes[drinkType];
+    const range = sliderRanges[drinkType];
+    
+    // Update Slider-Bereich
+    amountInput.min = range.min;
+    amountInput.max = range.max;
+    amountInput.value = range.default;
+    
+    // Update Labels
+    document.getElementById('sliderMin').textContent = range.min + 'ml';
+    document.getElementById('sliderMax').textContent = range.max + 'ml';
+    document.getElementById('amountValue').textContent = range.default;
+}
+
+function updateSliderValue() {
+    const amountInput = document.getElementById('amount');
+    document.getElementById('amountValue').textContent = amountInput.value;
+}
+
+function switchTimeMode(mode) {
+    currentTimeMode = mode;
+    
+    // Button-Styling
+    document.getElementById('timeModeClock').classList.toggle('active', mode === 'clock');
+    document.getElementById('timeModeTimer').classList.toggle('active', mode === 'timer');
+    
+    // Input-Bereiche umschalten
+    document.getElementById('timeInputClock').style.display = mode === 'clock' ? 'block' : 'none';
+    document.getElementById('timeInputTimer').style.display = mode === 'timer' ? 'block' : 'none';
 }
 
 // Event-Listener beim Laden
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('drinkType').addEventListener('change', updateAmountDefault);
     updateAmountDefault(); // Initial setzen
+    
+    // Aktuelle Uhrzeit setzen
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    document.getElementById('timeClock').value = hours + ':' + minutes;
 });
 
 function addDrink() {
     const typeSelect = document.getElementById('drinkType');
     const amountInput = document.getElementById('amount');
-    const timeInput = document.getElementById('timeOffset'); // Minuten her
 
     const factor = parseFloat(typeSelect.value);
     const amount = parseInt(amountInput.value);
-    const minsAgo = parseInt(timeInput.value);
 
     if (!amount || amount <= 0) {
         alert("Oida, gib a Menge ein!");
         return;
     }
 
-    // Wir speichern den absoluten Timestamp wann getrunken wurde
+    // Zeit basierend auf Modus berechnen
     const now = new Date();
-    const drinkTime = new Date(now.getTime() - (minsAgo * 60000));
+    let drinkTime;
+    
+    if (currentTimeMode === 'clock') {
+        const timeClockValue = document.getElementById('timeClock').value;
+        if (!timeClockValue) {
+            alert("Oida, gib a Uhrzeit ein!");
+            return;
+        }
+        
+        const [hours, minutes] = timeClockValue.split(':').map(Number);
+        drinkTime = new Date();
+        drinkTime.setHours(hours);
+        drinkTime.setMinutes(minutes);
+        drinkTime.setSeconds(0);
+        
+        // Falls Uhrzeit in der Zukunft liegt, nehmen wir gestern an
+        if (drinkTime > now) {
+            drinkTime.setDate(drinkTime.getDate() - 1);
+        }
+    } else {
+        // Timer-Modus
+        const minsAgo = parseInt(document.getElementById('timeTimer').value) || 0;
+        drinkTime = new Date(now.getTime() - (minsAgo * 60000));
+    }
 
     const drink = {
         id: Date.now(),
@@ -53,7 +116,15 @@ function addDrink() {
     calculatePee();
     
     // Reset Inputs
-    document.getElementById('timeOffset').value = 0;
+    if (currentTimeMode === 'timer') {
+        document.getElementById('timeTimer').value = 0;
+    } else {
+        // Aktuelle Uhrzeit setzen
+        const resetTime = new Date();
+        const hours = String(resetTime.getHours()).padStart(2, '0');
+        const minutes = String(resetTime.getMinutes()).padStart(2, '0');
+        document.getElementById('timeClock').value = hours + ':' + minutes;
+    }
 }
 
 function removeDrink(id) {

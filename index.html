@@ -30,15 +30,31 @@
         <option value="1.6">Schnaps / Harter Alk (Faktor 1.6)</option>
     </select>
 
-    <div style="display: flex; gap: 10px;">
-        <div style="flex: 1;">
-            <label for="amount">Menge (ml)</label>
-            <input type="number" id="amount" value="500" step="50">
+    <div>
+        <label for="amount">Menge: <span id="amountValue">500</span> ml</label>
+        <input type="range" id="amount" value="500" min="50" max="1000" step="10" oninput="updateSliderValue()">
+        <div style="display: flex; justify-content: space-between; font-size: 0.75em; color: #888; margin-top: -5px;">
+            <span id="sliderMin">50ml</span>
+            <span id="sliderMax">1000ml</span>
         </div>
-        <div style="flex: 1;">
-            <label for="timeOffset">Wann? (Minuten her)</label>
-            <input type="number" id="timeOffset" value="0" min="0">
+    </div>
+
+    <div style="margin-top: 15px;">
+        <label>Zeitangabe:</label>
+        <div style="display: flex; gap: 10px; margin-top: 10px;">
+            <button id="timeModeClock" class="time-mode-btn active" onclick="switchTimeMode('clock')">🕐 Uhrzeit</button>
+            <button id="timeModeTimer" class="time-mode-btn" onclick="switchTimeMode('timer')">⏱️ Timer</button>
         </div>
+    </div>
+
+    <div id="timeInputClock" style="margin-top: 10px;">
+        <label for="timeClock">Uhrzeit (wann getrunken?):</label>
+        <input type="time" id="timeClock">
+    </div>
+
+    <div id="timeInputTimer" style="margin-top: 10px; display: none;">
+        <label for="timeTimer">Vor wie vielen Minuten?</label>
+        <input type="number" id="timeTimer" value="0" min="0" step="5">
     </div>
 
     <button class="add-btn" onclick="addDrink()">Rein in den Schlund!</button>

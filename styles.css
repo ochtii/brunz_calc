@@ -45,6 +45,70 @@ input, select {
     box-sizing: border-box; /* Fix für Padding */
 }
 
+input[type="range"] {
+    padding: 0;
+    height: 8px;
+    background: linear-gradient(to right, #444 0%, var(--accent) 100%);
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    margin: 10px 0;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: var(--accent);
+    cursor: pointer;
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+}
+
+input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: var(--accent);
+    cursor: pointer;
+    border-radius: 50%;
+    border: none;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+}
+
+input[type="time"] {
+    cursor: pointer;
+}
+
+input[type="time"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    cursor: pointer;
+}
+
+.time-mode-btn {
+    flex: 1;
+    background: #2a2a2a;
+    color: #888;
+    border: 2px solid #444;
+    padding: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: all 0.3s ease;
+}
+
+.time-mode-btn:hover {
+    background: #333;
+    border-color: #555;
+}
+
+.time-mode-btn.active {
+    background: var(--accent);
+    color: #000;
+    border-color: var(--accent);
+    font-weight: bold;
+}
+
 button.add-btn {
     background-color: var(--accent);
     color: #000;
