@@ -71,11 +71,18 @@ function adjustTimer(amount) {
     updateTimerDisplay();
 }
 
-function showTimerInput() {
+// Globale Funktion für onclick
+window.showTimerInput = function() {
+    console.log('showTimerInput called');
     const displayContainer = document.getElementById('timerDisplayContainer');
     const inputContainer = document.getElementById('timerInputContainer');
     const manualInput = document.getElementById('timeTimerManual');
     const currentValue = document.getElementById('timeTimer').value;
+    
+    if (!displayContainer || !inputContainer || !manualInput) {
+        console.error('Timer elements not found');
+        return;
+    }
     
     // Container umschalten
     displayContainer.style.display = 'none';
@@ -87,13 +94,20 @@ function showTimerInput() {
         manualInput.focus();
         manualInput.select();
     }, 50);
-}
+};
 
-function hideTimerInput() {
+// Globale Funktion für onblur
+window.hideTimerInput = function() {
+    console.log('hideTimerInput called');
     const displayContainer = document.getElementById('timerDisplayContainer');
     const inputContainer = document.getElementById('timerInputContainer');
     const manualInput = document.getElementById('timeTimerManual');
     const timerInput = document.getElementById('timeTimer');
+    
+    if (!displayContainer || !inputContainer || !manualInput || !timerInput) {
+        console.error('Timer elements not found');
+        return;
+    }
     
     // Wert übernehmen
     const newValue = Math.max(0, parseInt(manualInput.value) || 0);
@@ -105,7 +119,7 @@ function hideTimerInput() {
     
     // Display aktualisieren
     updateTimerDisplay();
-}
+};
 
 function resetTimer() {
     console.log('resetTimer called');
@@ -303,6 +317,42 @@ function calculatePee() {
         text.innerText = "HOSE NASS / GAME OVER";
         text.style.color = "#ff0000";
     }
+    
+    // Prognose berechnen
+    updatePrognosis(totalUrineInBladder, capacity);
+}
+
+function updatePrognosis(currentUrine, capacity) {
+    const prognosisDiv = document.getElementById('prognosis');
+    if (!prognosisDiv) return;
+    
+    const available = capacity - currentUrine;
+    const drinkType = document.getElementById('drinkType').value;
+    const factor = parseFloat(drinkType);
+    const amount = parseInt(document.getElementById('amount').value) || 500;
+    
+    // Berechne wie viel Urin ein Getränk nach 90 Minuten generiert
+    const urinePerDrink = amount * factor;
+    
+    // Wie viele Getränke passen noch?
+    const drinksRemaining = Math.floor(available / urinePerDrink);
+    
+    // Zeit bis zur nächsten Entleerung (grobe Schätzung)
+    const minutesRemaining = Math.round(available / (urinePerDrink / 90));
+    
+    let prognosisText = '';
+    
+    if (currentUrine === 0) {
+        prognosisText = '🍺 Tank ist leer! Zeit zum Auftanken!';
+    } else if (drinksRemaining <= 0) {
+        prognosisText = '⚠️ Besser erstmal aufs Klo! Kapazität erreicht.';
+    } else if (drinksRemaining === 1) {
+        prognosisText = `🍺 Du kannst noch <strong>1 Hülse</strong> in den nächsten <strong>${minutesRemaining} Minuten</strong> trinken!`;
+    } else {
+        prognosisText = `🍺 Du kannst noch <strong>${drinksRemaining} Hülsen</strong> in den nächsten <strong>${minutesRemaining} Minuten</strong> trinken!`;
+    }
+    
+    prognosisDiv.innerHTML = prognosisText;
 }
 
 window.taciticalVomit = function() {
