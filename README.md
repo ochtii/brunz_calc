@@ -1,6 +1,6 @@
 # Brunz-Rechner 3000 🚽
 
-**Offizielles Tool der MA Bunker Wien (Abteilung Flüssigkeitsmanagement).** *Für Stefan, Vicky und alle anderen Wappla, die ned wissen, wanns Zeit is.*
+*Für Stefan, Vicky und alle anderen Wappla, die ned wissen, wanns Zeit is.*
 
 ## Was is des?
 Eine Web-Applikation (Single Page), die berechnet, wann du im Bunker, in der Kinettn oder beim Heurigen aufs Heisl musst. Basierend auf wissenschaftlichen Schätzungen und österreichischen Trinkgewohnheiten.
@@ -9,7 +9,7 @@ Eine Web-Applikation (Single Page), die berechnet, wann du im Bunker, in der Kin
 * **Tank-Konfigurator:** Ob Konfirmanden-Blase oder Bier-Tank – alles einstellbar.
 * **Multi-Drink-Tracking:** Egal ob du 5 Seidl oder 3 Spritzer intus hast, der Rechner addiert den Druck.
 * **Echtzeit-Simulation:** Der Füllstand steigt live, während deine Nieren hackln.
-* **Bunker-Mode:** Dunkles Design, damit dich im Stollen keiner sieht.
+* **Dark Mode:** Dunkles Design für Nachtschwärmer.
 
 ## Der Algorithmus (Die Wissenschaft, Oida)
 
