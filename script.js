@@ -592,17 +592,29 @@ window.taciticalVomit = function() {
     }, 600);
 }
 
-// Loop
-setInterval(calculatePee, 5000); // Check alle 5 sek
-calculatePee(); // Init
-
 // Disclaimer Funktionen
 function showDisclaimer() {
+    console.log('showDisclaimer aufgerufen');
     const modal = document.getElementById('disclaimer-modal');
-    modal.style.display = 'flex';
+    if (modal) {
+        modal.style.display = 'flex';
+        console.log('Modal angezeigt');
+    } else {
+        console.error('Disclaimer-Modal nicht gefunden!');
+    }
 }
 
 function hideDisclaimer() {
+    console.log('hideDisclaimer aufgerufen');
     const modal = document.getElementById('disclaimer-modal');
-    modal.style.display = 'none';
+    if (modal) {
+        modal.style.display = 'none';
+        console.log('Modal versteckt');
+    } else {
+        console.error('Disclaimer-Modal nicht gefunden!');
+    }
 }
+
+// Loop
+setInterval(calculatePee, 5000); // Check alle 5 sek
+calculatePee(); // Init
