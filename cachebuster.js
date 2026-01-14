@@ -101,30 +101,17 @@ class CacheBuster {
     }
 }
 
-// Globale Instanz
-let cacheBuster;
+// Globale Instanz - wird sofort erstellt
+const cacheBuster = new CacheBuster();
 
-// Sicherstellen dass CacheBuster initialisiert wird
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-        cacheBuster = new CacheBuster();
-    });
-} else {
-    cacheBuster = new CacheBuster();
+// Globale Funktionen für HTML-Events
+function toggleCacheBusting() {
+    console.log('toggleCacheBusting called');
+    cacheBuster.toggle();
 }
 
-// Globale Funktionen für HTML-Events - müssen SOFORT verfügbar sein
-window.toggleCacheBusting = function() {
-    if (!cacheBuster) {
-        cacheBuster = new CacheBuster();
-    }
-    cacheBuster.toggle();
-};
-
-window.showCacheStats = function() {
-    if (!cacheBuster) {
-        cacheBuster = new CacheBuster();
-    }
+function showCacheStats() {
+    console.log('showCacheStats called');
     const modal = document.getElementById('cache-modal');
     const statsBody = document.getElementById('stats-body');
     const stats = cacheBuster.getStats();
@@ -188,12 +175,13 @@ window.showCacheStats = function() {
 
     statsBody.innerHTML = html;
     modal.style.display = 'flex';
-};
+}
 
-window.closeCacheStats = function() {
+function closeCacheStats() {
+    console.log('closeCacheStats called');
     const modal = document.getElementById('cache-modal');
     modal.style.display = 'none';
-};
+}
 
 // Modal bei Click außerhalb schließen
 document.addEventListener('DOMContentLoaded', () => {
