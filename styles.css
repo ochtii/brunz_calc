@@ -122,6 +122,13 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     min-width: 50px;
 }
 
+.timer-btn-small {
+    padding: 8px 10px;
+    font-size: 0.9em;
+    min-width: 45px;
+    flex: 1;
+}
+
 .timer-btn:hover {
     background: #333;
     border-color: var(--accent);
@@ -132,6 +139,27 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     transform: scale(0.95);
     background: var(--accent);
     color: #000;
+}
+
+#timeTimer.timer-pulse {
+    animation: timerPulse 0.3s ease-out;
+}
+
+@keyframes timerPulse {
+    0% {
+        transform: scale(1);
+        background: #333;
+    }
+    50% {
+        transform: scale(1.05);
+        background: var(--accent);
+        color: #000;
+    }
+    100% {
+        transform: scale(1);
+        background: #333;
+        color: #fff;
+    }
 }
 
 button.add-btn {

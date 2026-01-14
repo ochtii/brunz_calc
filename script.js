@@ -60,12 +60,20 @@ window.switchTimeMode = function(mode) {
     if (timerInput) timerInput.style.display = mode === 'timer' ? 'block' : 'none';
 };
 
-window.adjustTimer = function(amount) {
+function adjustTimer(amount) {
     const timerInput = document.getElementById('timeTimer');
     const currentValue = parseInt(timerInput.value) || 0;
     const newValue = Math.max(0, currentValue + amount);
     timerInput.value = newValue;
-};
+    
+    // Animation triggern
+    timerInput.classList.remove('timer-pulse');
+    void timerInput.offsetWidth; // Reflow erzwingen
+    timerInput.classList.add('timer-pulse');
+    setTimeout(() => {
+        timerInput.classList.remove('timer-pulse');
+    }, 300);
+}
 
 // Event-Listener beim Laden
 document.addEventListener('DOMContentLoaded', () => {

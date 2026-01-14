@@ -54,12 +54,20 @@
 
     <div id="timeInputTimer" style="margin-top: 10px; display: none;">
         <label for="timeTimer">Vor wie vielen Minuten?</label>
-        <div style="display: flex; gap: 8px; align-items: center; margin-top: 5px;">
-            <button type="button" class="timer-btn" onclick="adjustTimer(-5)">-5</button>
-            <button type="button" class="timer-btn" onclick="adjustTimer(-1)">-1</button>
-            <input type="number" id="timeTimer" value="0" min="0" step="5" style="flex: 1;">
-            <button type="button" class="timer-btn" onclick="adjustTimer(1)">+1</button>
-            <button type="button" class="timer-btn" onclick="adjustTimer(5)">+5</button>
+        <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px;">
+            <div style="display: flex; gap: 6px; flex: 1; min-width: 200px;">
+                <button type="button" class="timer-btn timer-btn-small" onclick="adjustTimer(-60)">-60</button>
+                <button type="button" class="timer-btn timer-btn-small" onclick="adjustTimer(-10)">-10</button>
+                <button type="button" class="timer-btn timer-btn-small" onclick="adjustTimer(-5)">-5</button>
+                <button type="button" class="timer-btn timer-btn-small" onclick="adjustTimer(-1)">-1</button>
+            </div>
+            <input type="number" id="timeTimer" value="0" min="0" step="1" style="flex: 1; min-width: 80px; text-align: center; font-size: 1.1em; font-weight: bold;">
+            <div style="display: flex; gap: 6px; flex: 1; min-width: 200px;">
+                <button type="button" class="timer-btn timer-btn-small" onclick="adjustTimer(1)">+1</button>
+                <button type="button" class="timer-btn timer-btn-small" onclick="adjustTimer(5)">+5</button>
+                <button type="button" class="timer-btn timer-btn-small" onclick="adjustTimer(10)">+10</button>
+                <button type="button" class="timer-btn timer-btn-small" onclick="adjustTimer(60)">+60</button>
+            </div>
         </div>
     </div>
 
