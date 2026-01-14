@@ -130,8 +130,42 @@
 
     <div class="footer">
         &copy; 2025 Stefan & Vicky<br>
-        Nutzung auf eigene Gefahr. Hosenwechsel nicht inkludiert.
+        Nutzung auf eigene Gefahr. Hosenwechsel nicht inkludiert.<br>
+        <button id="console-toggle" onclick="toggleDebugConsole()" style="margin-top: 8px; padding: 6px 12px; background: #2a2a2a; color: #888; border: 2px solid #444; border-radius: 6px; cursor: pointer; font-size: 0.85em; transition: all 0.2s;" onmouseover="this.style.background='#333'; this.style.borderColor='var(--accent)'; this.style.color='var(--accent)';" onmouseout="this.style.background='#2a2a2a'; this.style.borderColor='#444'; this.style.color='#888';">
+            🛠️ Debug-Konsole
+        </button>
     </div>
+</div>
+
+<!-- Debug-Konsole -->
+<div id="debug-console" class="debug-console" style="display: none;">
+    <div class="console-header">
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="font-weight: bold;">🛠️ Debug-Konsole</span>
+            <span id="console-count" style="font-size: 0.8em; color: #888;">(0)</span>
+        </div>
+        <div style="display: flex; gap: 8px;">
+            <button onclick="toggleConsoleSettings()" class="console-btn" title="Einstellungen">⚙️</button>
+            <button onclick="clearConsole()" class="console-btn" title="Leeren">🗑️</button>
+            <button onclick="toggleConsoleLock()" id="console-lock-btn" class="console-btn" title="Größe sperren">🔓</button>
+            <button onclick="toggleDebugConsole()" class="console-btn" title="Schließen">&times;</button>
+        </div>
+    </div>
+    <div id="console-settings" class="console-settings" style="display: none;">
+        <label><input type="checkbox" id="show-log" checked onchange="updateConsoleFilters()"> Log</label>
+        <label><input type="checkbox" id="show-info" checked onchange="updateConsoleFilters()"> Info</label>
+        <label><input type="checkbox" id="show-warn" checked onchange="updateConsoleFilters()"> Warn</label>
+        <label><input type="checkbox" id="show-error" checked onchange="updateConsoleFilters()"> Error</label>
+        <label><input type="checkbox" id="show-timestamp" checked onchange="updateConsoleDisplay()"> Zeitstempel</label>
+        <label>Position: 
+            <select id="console-position" onchange="updateConsolePosition()">
+                <option value="bottom">Unten</option>
+                <option value="top">Oben</option>
+            </select>
+        </label>
+    </div>
+    <div id="console-resize-handle" class="console-resize-handle" style="display: none;" onmousedown="startConsoleResize(event)">↕️</div>
+    <div id="console-output" class="console-output"></div>
 </div>
 
 <script src="script.js"></script>

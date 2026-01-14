@@ -3,6 +3,249 @@ let drinks = [];
 const updateInterval = 10000; // Alle 10 sekunden update
 let currentTimeMode = 'clock'; // 'clock' oder 'timer'
 
+// Debug-Konsole State
+let consoleLogs = [];
+let consoleVisible = false;
+let consoleLocked = true;
+let consoleHeight = 300;
+let isResizing = false;
+
+// Console intercept
+const originalConsole = {
+    log: console.log,
+    info: console.info,
+    warn: console.warn,
+    error: console.error
+};
+
+// Override console methods
+console.log = function(...args) {
+    originalConsole.log.apply(console, args);
+    addConsoleEntry('log', args, getCallerInfo());
+};
+
+console.info = function(...args) {
+    originalConsole.info.apply(console, args);
+    addConsoleEntry('info', args, getCallerInfo());
+};
+
+console.warn = function(...args) {
+    originalConsole.warn.apply(console, args);
+    addConsoleEntry('warn', args, getCallerInfo());
+};
+
+console.error = function(...args) {
+    originalConsole.error.apply(console, args);
+    addConsoleEntry('error', args, getCallerInfo());
+};
+
+// Fehler abfangen
+window.addEventListener('error', (event) => {
+    addConsoleEntry('error', [`${event.message}`], `${event.filename}:${event.lineno}:${event.colno}`);
+});
+
+function getCallerInfo() {
+    const stack = new Error().stack;
+    const lines = stack.split('\n');
+    // Versuche die aufrufende Zeile zu finden (nicht die console.log Zeile selbst)
+    for (let i = 3; i < lines.length; i++) {
+        const line = lines[i];
+        if (line.includes('script.js')) {
+            const match = line.match(/script\.js:(\d+):(\d+)/);
+            if (match) {
+                return `script.js:${match[1]}`;
+            }
+        }
+    }
+    return 'unknown';
+}
+
+function addConsoleEntry(type, args, location) {
+    const timestamp = new Date();
+    const message = args.map(arg => {
+        if (typeof arg === 'object') {
+            try {
+                return JSON.stringify(arg, null, 2);
+            } catch (e) {
+                return String(arg);
+            }
+        }
+        return String(arg);
+    }).join(' ');
+    
+    consoleLogs.push({ type, message, timestamp, location });
+    updateConsoleDisplay();
+}
+
+function toggleDebugConsole() {
+    consoleVisible = !consoleVisible;
+    const consoleEl = document.getElementById('debug-console');
+    const toggleBtn = document.getElementById('console-toggle');
+    
+    if (consoleVisible) {
+        consoleEl.style.display = 'flex';
+        consoleEl.style.height = consoleHeight + 'px';
+        toggleBtn.textContent = '🛠️ Konsole schließen';
+        updateConsolePosition();
+        adjustPageMargin(true);
+    } else {
+        consoleEl.style.display = 'none';
+        toggleBtn.textContent = '🛠️ Debug-Konsole';
+        adjustPageMargin(false);
+    }
+}
+
+function adjustPageMargin(consoleOpen) {
+    const container = document.querySelector('.container');
+    const position = document.getElementById('console-position').value;
+    
+    if (consoleOpen) {
+        if (position === 'bottom') {
+            container.style.marginBottom = (consoleHeight + 20) + 'px';
+        } else {
+            container.style.marginTop = (consoleHeight + 20) + 'px';
+        }
+    } else {
+        container.style.marginBottom = '0';
+        container.style.marginTop = '0';
+    }
+}
+
+function toggleConsoleSettings() {
+    const settings = document.getElementById('console-settings');
+    settings.style.display = settings.style.display === 'none' ? 'flex' : 'none';
+}
+
+function toggleConsoleLock() {
+    consoleLocked = !consoleLocked;
+    const lockBtn = document.getElementById('console-lock-btn');
+    const resizeHandle = document.getElementById('console-resize-handle');
+    
+    if (consoleLocked) {
+        lockBtn.textContent = '🔒';
+        lockBtn.title = 'Größe entsperren';
+        resizeHandle.style.display = 'none';
+    } else {
+        lockBtn.textContent = '🔓';
+        lockBtn.title = 'Größe sperren';
+        resizeHandle.style.display = 'block';
+    }
+}
+
+function clearConsole() {
+    consoleLogs = [];
+    updateConsoleDisplay();
+}
+
+function updateConsoleFilters() {
+    updateConsoleDisplay();
+}
+
+function updateConsolePosition() {
+    const consoleEl = document.getElementById('debug-console');
+    const position = document.getElementById('console-position').value;
+    
+    consoleEl.className = 'debug-console position-' + position;
+    adjustPageMargin(consoleVisible);
+}
+
+function updateConsoleDisplay() {
+    const output = document.getElementById('console-output');
+    const showLog = document.getElementById('show-log').checked;
+    const showInfo = document.getElementById('show-info').checked;
+    const showWarn = document.getElementById('show-warn').checked;
+    const showError = document.getElementById('show-error').checked;
+    const showTimestamp = document.getElementById('show-timestamp').checked;
+    
+    const filtered = consoleLogs.filter(entry => {
+        if (entry.type === 'log' && !showLog) return false;
+        if (entry.type === 'info' && !showInfo) return false;
+        if (entry.type === 'warn' && !showWarn) return false;
+        if (entry.type === 'error' && !showError) return false;
+        return true;
+    });
+    
+    document.getElementById('console-count').textContent = `(${filtered.length}/${consoleLogs.length})`;
+    
+    output.innerHTML = filtered.map((entry, index) => {
+        const time = showTimestamp ? `<span class="console-timestamp">${entry.timestamp.toLocaleTimeString('de-AT')}</span>` : '';
+        const location = entry.location ? `<div class="console-location">${entry.location}</div>` : '';
+        
+        return `
+            <div class="console-entry ${entry.type}">
+                <div class="console-entry-content">
+                    ${time}${entry.message}
+                    ${location}
+                </div>
+                <button class="console-copy-btn" onclick="copyConsoleEntry(${index})" title="Kopieren">📋</button>
+            </div>
+        `;
+    }).join('');
+    
+    output.scrollTop = output.scrollHeight;
+}
+
+function copyConsoleEntry(index) {
+    const filtered = consoleLogs.filter(entry => {
+        const showLog = document.getElementById('show-log').checked;
+        const showInfo = document.getElementById('show-info').checked;
+        const showWarn = document.getElementById('show-warn').checked;
+        const showError = document.getElementById('show-error').checked;
+        
+        if (entry.type === 'log' && !showLog) return false;
+        if (entry.type === 'info' && !showInfo) return false;
+        if (entry.type === 'warn' && !showWarn) return false;
+        if (entry.type === 'error' && !showError) return false;
+        return true;
+    });
+    
+    const entry = filtered[index];
+    const text = `[${entry.type.toUpperCase()}] ${entry.timestamp.toLocaleString('de-AT')} - ${entry.message}\nLocation: ${entry.location}`;
+    
+    navigator.clipboard.writeText(text).then(() => {
+        const btn = event.target;
+        const originalText = btn.textContent;
+        btn.textContent = '✓';
+        setTimeout(() => btn.textContent = originalText, 1000);
+    });
+}
+
+function startConsoleResize(e) {
+    if (consoleLocked) return;
+    isResizing = true;
+    
+    const startY = e.clientY;
+    const startHeight = consoleHeight;
+    const position = document.getElementById('console-position').value;
+    
+    function doResize(e) {
+        if (!isResizing) return;
+        
+        let newHeight;
+        if (position === 'bottom') {
+            newHeight = startHeight + (startY - e.clientY);
+        } else {
+            newHeight = startHeight + (e.clientY - startY);
+        }
+        
+        newHeight = Math.max(100, Math.min(600, newHeight));
+        consoleHeight = newHeight;
+        
+        const consoleEl = document.getElementById('debug-console');
+        consoleEl.style.height = newHeight + 'px';
+        adjustPageMargin(true);
+    }
+    
+    function stopResize() {
+        isResizing = false;
+        document.removeEventListener('mousemove', doResize);
+        document.removeEventListener('mouseup', stopResize);
+    }
+    
+    document.addEventListener('mousemove', doResize);
+    document.addEventListener('mouseup', stopResize);
+}
+
 // Realistisches Volumen pro Getränktyp
 const drinkVolumes = {
     "1.0": 350,   // Wasser / Kracherl
