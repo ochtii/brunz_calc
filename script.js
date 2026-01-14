@@ -35,12 +35,12 @@ function updateAmountDefault() {
     document.getElementById('amountValue').textContent = range.default;
 }
 
-function updateSliderValue() {
+window.updateSliderValue = function() {
     const amountInput = document.getElementById('amount');
     document.getElementById('amountValue').textContent = amountInput.value;
-}
+};
 
-function switchTimeMode(mode) {
+window.switchTimeMode = function(mode) {
     currentTimeMode = mode;
     
     // Button-Styling
@@ -50,7 +50,7 @@ function switchTimeMode(mode) {
     // Input-Bereiche umschalten
     document.getElementById('timeInputClock').style.display = mode === 'clock' ? 'block' : 'none';
     document.getElementById('timeInputTimer').style.display = mode === 'timer' ? 'block' : 'none';
-}
+};
 
 // Event-Listener beim Laden
 document.addEventListener('DOMContentLoaded', () => {
@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('timeClock').value = hours + ':' + minutes;
 });
 
-function addDrink() {
+window.addDrink = function() {
     const typeSelect = document.getElementById('drinkType');
     const amountInput = document.getElementById('amount');
 
@@ -127,11 +127,11 @@ function addDrink() {
     }
 }
 
-function removeDrink(id) {
+window.removeDrink = function(id) {
     drinks = drinks.filter(d => d.id !== id);
     renderList();
     calculatePee();
-}
+};
 
 function renderList() {
     const list = document.getElementById('drinkList');
@@ -230,7 +230,7 @@ function calculatePee() {
     }
 }
 
-function taciticalVomit() {
+window.taciticalVomit = function() {
     if (drinks.length === 0) {
         alert("Oida, es gibt nix zum Ausleieren!");
         return;

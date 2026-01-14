@@ -13,7 +13,12 @@ class CacheBuster {
 
     init() {
         this.applyBusters();
-        this.updateToggleUI();
+        // UpdateToggleUI erst nach DOM-Load
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => this.updateToggleUI());
+        } else {
+            this.updateToggleUI();
+        }
     }
 
     // Timestamp für Cache-Busting generieren
@@ -99,12 +104,12 @@ class CacheBuster {
 // Globale Instanz
 const cacheBuster = new CacheBuster();
 
-// Globale Funktionen für HTML-Events
-function toggleCacheBusting() {
+// Globale Funktionen für HTML-Events - müssen SOFORT verfügbar sein
+window.toggleCacheBusting = function() {
     cacheBuster.toggle();
-}
+};
 
-function showCacheStats() {
+window.showCacheStats = function() {
     const modal = document.getElementById('cache-modal');
     const statsBody = document.getElementById('stats-body');
     const stats = cacheBuster.getStats();
@@ -168,12 +173,12 @@ function showCacheStats() {
 
     statsBody.innerHTML = html;
     modal.style.display = 'flex';
-}
+};
 
-function closeCacheStats() {
+window.closeCacheStats = function() {
     const modal = document.getElementById('cache-modal');
     modal.style.display = 'none';
-}
+};
 
 // Modal bei Click außerhalb schließen
 document.addEventListener('DOMContentLoaded', () => {
