@@ -60,6 +60,13 @@ window.switchTimeMode = function(mode) {
     if (timerInput) timerInput.style.display = mode === 'timer' ? 'block' : 'none';
 };
 
+window.adjustTimer = function(amount) {
+    const timerInput = document.getElementById('timeTimer');
+    const currentValue = parseInt(timerInput.value) || 0;
+    const newValue = Math.max(0, currentValue + amount);
+    timerInput.value = newValue;
+};
+
 // Event-Listener beim Laden
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('drinkType').addEventListener('change', updateAmountDefault);
