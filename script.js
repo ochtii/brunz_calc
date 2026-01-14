@@ -43,13 +43,21 @@ window.updateSliderValue = function() {
 window.switchTimeMode = function(mode) {
     currentTimeMode = mode;
     
+    console.log('Switching to mode:', mode, 'currentTimeMode is now:', currentTimeMode);
+    
     // Button-Styling
-    document.getElementById('timeModeClock').classList.toggle('active', mode === 'clock');
-    document.getElementById('timeModeTimer').classList.toggle('active', mode === 'timer');
+    const clockBtn = document.getElementById('timeModeClock');
+    const timerBtn = document.getElementById('timeModeTimer');
+    
+    if (clockBtn) clockBtn.classList.toggle('active', mode === 'clock');
+    if (timerBtn) timerBtn.classList.toggle('active', mode === 'timer');
     
     // Input-Bereiche umschalten
-    document.getElementById('timeInputClock').style.display = mode === 'clock' ? 'block' : 'none';
-    document.getElementById('timeInputTimer').style.display = mode === 'timer' ? 'block' : 'none';
+    const clockInput = document.getElementById('timeInputClock');
+    const timerInput = document.getElementById('timeInputTimer');
+    
+    if (clockInput) clockInput.style.display = mode === 'clock' ? 'block' : 'none';
+    if (timerInput) timerInput.style.display = mode === 'timer' ? 'block' : 'none';
 };
 
 // Event-Listener beim Laden
@@ -72,6 +80,8 @@ window.addDrink = function() {
     const amount = parseInt(amountInput.value);
 
     if (!amount || amount <= 0) {
+    console.log('Current time mode:', currentTimeMode);
+    
         alert("Oida, gib a Menge ein!");
         return;
     }
