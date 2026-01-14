@@ -199,34 +199,26 @@ function calculatePee() {
 
     const bar = document.getElementById('progressBar');
     const text = document.getElementById('statusText');
-    const bladder = document.getElementById('bladderVisual');
     
     bar.style.width = percentFull + "%";
-
-    // Blase-Größe basierend auf Füllstand
-    bladder.style.transform = `scale(${0.8 + (percentFull / 100) * 0.35})`;
 
     // Farben & Texte (Austrian Style)
     if (percentFull < 40) {
         bar.style.backgroundColor = "var(--safe)";
         text.innerText = "Alles leiwand.";
         text.style.color = "var(--safe)";
-        bladder.classList.remove('full');
     } else if (percentFull < 75) {
         bar.style.backgroundColor = "#ffca3a"; // Gelb
         text.innerText = "Druck auf der Leitung...";
         text.style.color = "#ffca3a";
-        bladder.classList.remove('full');
     } else if (percentFull < 95) {
         bar.style.backgroundColor = "var(--danger)"; // Rot
         text.innerText = "OIDA! Such an Baum!";
         text.style.color = "var(--danger)";
-        bladder.classList.add('full');
     } else {
         bar.style.backgroundColor = "#800f2f"; // Dunkelrot
         text.innerText = "HOSE NASS / GAME OVER";
         text.style.color = "#ff0000";
-        bladder.classList.add('full');
     }
 }
 
