@@ -66,13 +66,24 @@ function adjustTimer(amount) {
     const newValue = Math.max(0, currentValue + amount);
     timerInput.value = newValue;
     
-    // Animation triggern
-    timerInput.classList.remove('timer-pulse');
-    void timerInput.offsetWidth; // Reflow erzwingen
-    timerInput.classList.add('timer-pulse');
-    setTimeout(() => {
-        timerInput.classList.remove('timer-pulse');
-    }, 300);
+    updateTimerDisplay();
+}
+
+function updateTimerDisplay() {
+    const timerInput = document.getElementById('timeTimer');
+    const display = document.getElementById('timerDisplay');
+    const value = parseInt(timerInput.value) || 0;
+    
+    if (display) {
+        display.textContent = value;
+        // Animation triggern
+        display.classList.remove('timer-pulse');
+        void display.offsetWidth; // Reflow erzwingen
+        display.classList.add('timer-pulse');
+        setTimeout(() => {
+            display.classList.remove('timer-pulse');
+        }, 300);
+    }
 }
 
 // Event-Listener beim Laden

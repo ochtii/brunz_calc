@@ -54,21 +54,27 @@
 
     <div id="timeInputTimer" style="margin-top: 10px; display: none;">
         <label for="timeTimer">Vor wie vielen Minuten?</label>
-        <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px;">
-            <div style="display: flex; gap: 6px; flex: 1; min-width: 200px;">
-                <button type="button" class="timer-btn timer-btn-small" onclick="adjustTimer(-60)">-60</button>
-                <button type="button" class="timer-btn timer-btn-small" onclick="adjustTimer(-10)">-10</button>
-                <button type="button" class="timer-btn timer-btn-small" onclick="adjustTimer(-5)">-5</button>
-                <button type="button" class="timer-btn timer-btn-small" onclick="adjustTimer(-1)">-1</button>
-            </div>
-            <input type="number" id="timeTimer" value="0" min="0" step="1" style="flex: 1; min-width: 80px; text-align: center; font-size: 1.1em; font-weight: bold;">
-            <div style="display: flex; gap: 6px; flex: 1; min-width: 200px;">
-                <button type="button" class="timer-btn timer-btn-small" onclick="adjustTimer(1)">+1</button>
-                <button type="button" class="timer-btn timer-btn-small" onclick="adjustTimer(5)">+5</button>
-                <button type="button" class="timer-btn timer-btn-small" onclick="adjustTimer(10)">+10</button>
-                <button type="button" class="timer-btn timer-btn-small" onclick="adjustTimer(60)">+60</button>
+        <div style="display: flex; gap: 10px; align-items: center; margin-top: 12px;">
+            <div style="flex: 1; text-align: center;">
+                <div style="font-size: 2em; font-weight: bold; color: var(--accent); margin-bottom: 8px;">
+                    <span id="timerDisplay">0</span> <span style="font-size: 0.6em; color: #888;">Minuten</span>
+                </div>
+                <input type="number" id="timeTimer" value="0" min="0" step="1" style="display: none;">
             </div>
         </div>
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 12px;">
+            <button type="button" class="timer-btn-minus" onclick="adjustTimer(-60)">−60</button>
+            <button type="button" class="timer-btn-minus" onclick="adjustTimer(-10)">−10</button>
+            <button type="button" class="timer-btn-minus" onclick="adjustTimer(-5)">−5</button>
+            <button type="button" class="timer-btn-minus" onclick="adjustTimer(-1)">−1</button>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 8px;">
+            <button type="button" class="timer-btn-plus" onclick="adjustTimer(1)">+1</button>
+            <button type="button" class="timer-btn-plus" onclick="adjustTimer(5)">+5</button>
+            <button type="button" class="timer-btn-plus" onclick="adjustTimer(10)">+10</button>
+            <button type="button" class="timer-btn-plus" onclick="adjustTimer(60)">+60</button>
+        </div>
+        <button type="button" onclick="document.getElementById('timeTimer').value = 0; updateTimerDisplay();" style="width: 100%; margin-top: 12px; padding: 8px; background: #444; color: #888; border: 1px solid #555; border-radius: 6px; cursor: pointer; font-size: 0.9em;">↺ Zurücksetzen</button>
     </div>
 
     <button class="add-btn" onclick="addDrink()">Rein in den Schlund!</button>
