@@ -71,8 +71,8 @@ function adjustTimer(amount) {
     updateTimerDisplay();
 }
 
-// Globale Funktion für onclick
-window.showTimerInput = function() {
+// Globale Funktion für onclick - MUSS außerhalb von allem anderen sein
+function showTimerInput() {
     console.log('showTimerInput called');
     const displayContainer = document.getElementById('timerDisplayContainer');
     const inputContainer = document.getElementById('timerInputContainer');
@@ -94,10 +94,10 @@ window.showTimerInput = function() {
         manualInput.focus();
         manualInput.select();
     }, 50);
-};
+}
 
 // Globale Funktion für onblur
-window.hideTimerInput = function() {
+function hideTimerInput() {
     console.log('hideTimerInput called');
     const displayContainer = document.getElementById('timerDisplayContainer');
     const inputContainer = document.getElementById('timerInputContainer');
@@ -388,3 +388,7 @@ window.taciticalVomit = function() {
 // Loop
 setInterval(calculatePee, 5000); // Check alle 5 sek
 calculatePee(); // Init
+
+// Initiale Prognose
+const capacity = parseInt(document.getElementById('bladderCap').value);
+updatePrognosis(0, capacity);
