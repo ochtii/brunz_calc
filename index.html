@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Brunz-Rechner 3000</title>
-    <link rel="stylesheet" id="styles-link" href="styles.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
@@ -114,29 +114,11 @@
 
     <div class="footer">
         &copy; 2025 Stefan & Vicky<br>
-        Nutzung auf eigene Gefahr. Hosenwechsel nicht inkludiert.<br>
-        <small>
-            <button id="cache-toggle" onclick="toggleCacheBusting()" style="background: none; border: none; color: #666; text-decoration: underline; cursor: pointer; padding: 0; font: inherit;">Cache-Busting</button>
-            | <button id="cache-stats" onclick="showCacheStats()" style="background: none; border: none; color: #666; text-decoration: underline; cursor: pointer; padding: 0; font: inherit;">📊 Stats</button>
-        </small>
+        Nutzung auf eigene Gefahr. Hosenwechsel nicht inkludiert.
     </div>
 </div>
 
-<!-- Cache Stats Modal -->
-<div id="cache-modal" class="modal" style="display: none;">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h2>Cache-Buster Stats</h2>
-            <button onclick="closeCacheStats()" style="background: none; border: none; color: #e0e0e0; font-size: 1.5em; cursor: pointer;">&times;</button>
-        </div>
-        <div class="modal-body" id="stats-body">
-            <!-- Stats werden hier eingefügt -->
-        </div>
-    </div>
-</div>
-
-<script src="cachebuster.js"></script>
-<script id="script-link" src="script.js"></script>
+<script src="script.js"></script>
 
 </body>
 </html>
