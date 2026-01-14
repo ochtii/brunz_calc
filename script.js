@@ -61,11 +61,20 @@ window.switchTimeMode = function(mode) {
 };
 
 function adjustTimer(amount) {
+    console.log('adjustTimer called with:', amount);
     const timerInput = document.getElementById('timeTimer');
     const currentValue = parseInt(timerInput.value) || 0;
     const newValue = Math.max(0, currentValue + amount);
     timerInput.value = newValue;
+    console.log('Timer value changed from', currentValue, 'to', newValue);
     
+    updateTimerDisplay();
+}
+
+function resetTimer() {
+    console.log('resetTimer called');
+    const timerInput = document.getElementById('timeTimer');
+    timerInput.value = 0;
     updateTimerDisplay();
 }
 
@@ -73,6 +82,8 @@ function updateTimerDisplay() {
     const timerInput = document.getElementById('timeTimer');
     const display = document.getElementById('timerDisplay');
     const value = parseInt(timerInput.value) || 0;
+    
+    console.log('updateTimerDisplay:', value);
     
     if (display) {
         display.textContent = value;

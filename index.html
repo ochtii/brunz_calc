@@ -56,25 +56,43 @@
         <label for="timeTimer">Vor wie vielen Minuten?</label>
         <div style="display: flex; gap: 10px; align-items: center; margin-top: 12px;">
             <div style="flex: 1; text-align: center;">
-                <div style="font-size: 2em; font-weight: bold; color: var(--accent); margin-bottom: 8px;">
-                    <span id="timerDisplay">0</span> <span style="font-size: 0.6em; color: #888;">Minuten</span>
+                <div style="font-size: 2.5em; font-weight: bold; color: var(--accent); margin-bottom: 8px; font-family: 'Courier New', monospace;">
+                    <span id="timerDisplay">0</span> <span style="font-size: 0.5em; color: #888;">Min</span>
                 </div>
                 <input type="number" id="timeTimer" value="0" min="0" step="1" style="display: none;">
             </div>
         </div>
         <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 12px;">
-            <button type="button" class="timer-btn-minus" onclick="adjustTimer(-60)">−60</button>
-            <button type="button" class="timer-btn-minus" onclick="adjustTimer(-10)">−10</button>
-            <button type="button" class="timer-btn-minus" onclick="adjustTimer(-5)">−5</button>
-            <button type="button" class="timer-btn-minus" onclick="adjustTimer(-1)">−1</button>
+            <button type="button" class="timer-btn-minus" onclick="adjustTimer(-60)" title="1 Stunde weniger">
+                <div style="font-size: 0.7em;">− 1h</div>
+                <div style="font-size: 1.2em; font-weight: bold;">60</div>
+            </button>
+            <button type="button" class="timer-btn-minus" onclick="adjustTimer(-10)" title="10 Minuten weniger">
+                <div style="font-size: 1.3em; font-weight: bold;">−10</div>
+            </button>
+            <button type="button" class="timer-btn-minus" onclick="adjustTimer(-5)" title="5 Minuten weniger">
+                <div style="font-size: 1.3em; font-weight: bold;">−5</div>
+            </button>
+            <button type="button" class="timer-btn-minus" onclick="adjustTimer(-1)" title="1 Minute weniger">
+                <div style="font-size: 1.3em; font-weight: bold;">−1</div>
+            </button>
         </div>
         <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 8px;">
-            <button type="button" class="timer-btn-plus" onclick="adjustTimer(1)">+1</button>
-            <button type="button" class="timer-btn-plus" onclick="adjustTimer(5)">+5</button>
-            <button type="button" class="timer-btn-plus" onclick="adjustTimer(10)">+10</button>
-            <button type="button" class="timer-btn-plus" onclick="adjustTimer(60)">+60</button>
+            <button type="button" class="timer-btn-plus" onclick="adjustTimer(1)" title="1 Minute mehr">
+                <div style="font-size: 1.3em; font-weight: bold;">+1</div>
+            </button>
+            <button type="button" class="timer-btn-plus" onclick="adjustTimer(5)" title="5 Minuten mehr">
+                <div style="font-size: 1.3em; font-weight: bold;">+5</div>
+            </button>
+            <button type="button" class="timer-btn-plus" onclick="adjustTimer(10)" title="10 Minuten mehr">
+                <div style="font-size: 1.3em; font-weight: bold;">+10</div>
+            </button>
+            <button type="button" class="timer-btn-plus" onclick="adjustTimer(60)" title="1 Stunde mehr">
+                <div style="font-size: 0.7em;">+ 1h</div>
+                <div style="font-size: 1.2em; font-weight: bold;">60</div>
+            </button>
         </div>
-        <button type="button" onclick="document.getElementById('timeTimer').value = 0; updateTimerDisplay();" style="width: 100%; margin-top: 12px; padding: 8px; background: #444; color: #888; border: 1px solid #555; border-radius: 6px; cursor: pointer; font-size: 0.9em;">↺ Zurücksetzen</button>
+        <button type="button" onclick="resetTimer()" style="width: 100%; margin-top: 12px; padding: 10px; background: #2a2a2a; color: #888; border: 2px solid #444; border-radius: 8px; cursor: pointer; font-size: 0.95em; transition: all 0.2s ease;" onmouseover="this.style.background='#333'; this.style.borderColor='#555'; this.style.color='#aaa';" onmouseout="this.style.background='#2a2a2a'; this.style.borderColor='#444'; this.style.color='#888';">↺ Zurücksetzen auf 0</button>
     </div>
 
     <button class="add-btn" onclick="addDrink()">Rein in den Schlund!</button>
