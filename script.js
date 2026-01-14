@@ -560,60 +560,6 @@ function calculatePee() {
         text.innerText = "HOSE NASS / GAME OVER";
         text.style.color = "#ff0000";
     }
-    
-    // Prognose berechnen
-    updatePrognosis(totalUrineInBladder, capacity);
-}
-
-function updatePrognosis(currentUrine, capacity) {
-    const prognosisDiv = document.getElementById('prognosis');
-    if (!prognosisDiv) return;
-    
-    const available = capacity - currentUrine;
-    const drinkType = document.getElementById('drinkType').value;
-    const factor = parseFloat(drinkType);
-    const amount = parseInt(document.getElementById('amount').value) || 500;
-    
-    // Berechne wie viel Urin ein Getränk nach 90 Minuten generiert (100% verarbeitet)
-    const urinePerDrink = amount * factor;
-    
-    // Wie viele Getränke passen theoretisch noch rein (volle Verarbeitung nach 90 Min)?
-    const maxDrinks = Math.floor(available / urinePerDrink);
-    
-    // Zeit-Berechnung: Wie lange kann ich trinken bis die Blase voll ist?
-    // Annahme: Ein Getränk wird über 90 Minuten verarbeitet
-    const timePerDrink = 90; // Minuten bis ein Getränk komplett verarbeitet ist
-    
-    // Verfügbare Zeit = Anzahl der Getränke × Zeit pro Getränk
-    const availableTime = maxDrinks * timePerDrink;
-    
-    // Formatierung der Zeit
-    let timeText = '';
-    if (availableTime >= 60) {
-        const hours = Math.floor(availableTime / 60);
-        const mins = availableTime % 60;
-        if (mins > 0) {
-            timeText = `${hours}h ${mins}min`;
-        } else {
-            timeText = `${hours}h`;
-        }
-    } else {
-        timeText = `${availableTime} Min`;
-    }
-    
-    let prognosisText = '';
-    
-    if (currentUrine === 0) {
-        prognosisText = `🍺 <strong>Kapazität:</strong> ${maxDrinks} Hülsen (${amount}ml) passen rein über <strong>${timeText}</strong>`;
-    } else if (maxDrinks <= 0) {
-        prognosisText = '⚠️ <strong>VOLL!</strong> Besser erstmal aufs Klo gehen!';
-    } else if (maxDrinks === 1) {
-        prognosisText = `🍺 <strong>Noch Platz für 1 Hülse</strong> (${amount}ml) innerhalb der nächsten <strong>${timeText}</strong>`;
-    } else {
-        prognosisText = `🍺 <strong>Noch Platz für ${maxDrinks} Hülsen</strong> (je ${amount}ml) über die nächsten <strong>${timeText}</strong>`;
-    }
-    
-    prognosisDiv.innerHTML = prognosisText;
 }
 
 window.taciticalVomit = function() {
@@ -649,7 +595,3 @@ window.taciticalVomit = function() {
 // Loop
 setInterval(calculatePee, 5000); // Check alle 5 sek
 calculatePee(); // Init
-
-// Initiale Prognose
-const capacity = parseInt(document.getElementById('bladderCap').value);
-updatePrognosis(0, capacity);
